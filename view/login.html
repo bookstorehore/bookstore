@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>用户登录</title>
+	<meta charset="utf-8">
+	<link rel="icon" href="../fonts/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../fonts/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1442752814_3171852.css">
+   	<link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+</head>
+<body>
+	<div class="navbar navbar-fixed">
+		<div class="toolbar">
+			<div class="toolbar-widget">
+				
+			</div>
+			<div class="toolbar-title">
+				
+			</div>
+			<div class="toolbar-widget"></div>
+			<div class="toobar-widget"></div>
+		</div>
+	</div>
+	<div class="logincontainer">
+		<div class="formarea">
+			<h1 class="title">已有账号登陆</h1>
+			<section class="form">
+				<form method="post">
+					<fieldset>
+						<i class="iconfont icon-user formicon"></i>
+						<input type="text" placeholder="请输入用户名" class="loginform user" onblur="nameCheck(this)">
+					</fieldset>
+					<fieldset>
+						<i class="iconfont icon-mima formicon"></i>
+						<input type="password" placeholder="请输入密码" class="loginform pwd" onblur="pwdCheck(this)">
+					</fieldset>
+					<fieldset>
+						<button class="btn btn-default btn-submit">登陆</button>
+					</fieldset>
+				</form>
+			</section>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/formcheck.js"></script>
+	<script type="text/javascript" src="../js/logcheck.js"></script>
+</body>
+</html>

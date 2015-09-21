@@ -1,0 +1,145 @@
+
+/*
+	2015/09/17  verseion 1.0
+	公共组件部分
+*/
+
+/* navbar组件*/
+
+body{
+	-webkit-font-smoothing: antialiased;
+    background-color: whitesmoke;
+    color: #333333;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.navbar{
+	background-color: #fff;
+}
+
+.navbar-fixed{
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 1000;
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+
+.toolbar{
+	padding:4px;
+	display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.toolbar-widget{
+	padding: 6px;
+	display: inline-block;
+}
+
+.toolbar-title{
+	font-size: 20px;
+    line-height: 24px;
+    padding: 12px;
+    display: inline-block;
+    -webkit-flex-grow: 1;
+    -moz-flex-grow: 1;
+    flex-grow: 1;
+    -ms-flex-positive: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.center{
+	text-align: center;
+}
+
+
+/* panel 组件*/
+
+.panel{
+	margin-bottom: 16px;
+	float: left;
+	display: block;
+	margin-right: 2.35765%;
+	width: 23.23176%;
+	border-radius: 2px;
+	box-shadow: 1px 2px 5px #f1f1f1;
+}
+
+.panelmedia{
+
+}
+
+/* 表单组件*/
+
+fieldset{
+	position: relative;
+}
+
+i.formicon{
+	position: absolute;
+	bottom: 5px;
+	vertical-align: text-bottom;
+	font-size: 20px;
+}
+
+.loginform{
+	border:none;
+	border-bottom: solid 1px #eee;
+	margin-top: 15px;
+	padding:5px 0px 5px 30px;
+	text-indent: 2px;
+	width: 100%;
+	font-size: 16px;
+}
+
+.loginform:focus{
+	border-bottom:solid 1px #fcc828;
+	outline: none;
+}
+
+
+/* btn组件*/
+
+.btn{
+	position: relative;
+	padding: 6px 12px;
+	border-radius: 2px;
+	background: transparent;
+	color: #333;
+	overflow: hidden;
+	outline: none;
+}
+
+.btn-default{
+	border:none;
+}
+
+.btn-default:hover{
+	background-color: #eee;
+}
+
+.btn-submit{
+	border: solid 1px #333;
+}
+.btn-submit{
+	background-color: #eee;
+}
+.btn-big{
+	padding: 10px 22px;
+}
+
+/* 提示信息*/
+
+.noteinfo{
+	padding: 10px;
+	color: red;
+}
