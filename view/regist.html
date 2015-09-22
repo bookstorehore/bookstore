@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="icon" href="../fonts/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="../fonts/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1442752814_3171852.css">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1442835366_2342465.css">
    	<link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/login.css">
@@ -13,15 +13,31 @@
 <body>
 	<div class="navbar navbar-fixed">
 		<div class="toolbar">
+			<div class="toolbar-widget" id="menu">
+				<a href="javascript:" class="btn btn-icon"><i class="iconfont icon-menu"></i></a>
+			</div>
+			<div class="toolbar-title"><a href="/">BookStore</a></div>
 			<div class="toolbar-widget">
-				
+				<a href="/reg" class="btn btn-default">注册</a>
 			</div>
-			<div class="toolbar-title">
-				
+			<div class="toolbar-widget">
+				<a href="/login" class="btn btn-default">登录</a>
 			</div>
-			<div class="toolbar-widget"></div>
-			<div class="toolbar-widget"></div>
 		</div>
+
+		<nav class="sidebar" id="sidebar">
+			<ul class="sidemenu" id="sidemenu">
+				<li><a href="/"><i class="iconfont icon-home"></i>首页</a></li>
+				<li><a href=""><i class="iconfont icon-buy"></i>购买</a></li>
+				<li><a href=""><i class="iconfont icon-reg"></i>注册</a></li>
+				<li><a href=""><i class="iconfont icon-login"></i>登录</a></li>
+				<li class="divider"></li>
+				<li><a href=""><i class="iconfont icon-help"></i>帮助</a></li>
+				<li><a href=""><i class="iconfont icon-contact"></i>联系</a></li>
+				<li class="divider"></li>
+				<li>Copyright © 2015</li>
+			</ul>
+		</nav>
 	</div>
 	<div class="logincontainer">
 		<div class="formarea">
@@ -58,6 +74,7 @@
 	</div>
 	<script type="text/javascript" src="https://cn.avoscloud.com/scripts/lib/av-0.5.0.min.js"></script>
 	<script type="text/javascript" src="../js/config.js"></script>
+	<script type="text/javascript" src="../js/widget.js"></script>
 	<script type="text/javascript" src="../js/formcheck.js" ></script>
 	<script type="text/javascript" src="../js/regcheck.js"></script>
 </body>

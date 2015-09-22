@@ -19,11 +19,27 @@ function regUser(username,pwd,email){
 	user.set("email", email);
 	user.signUp(null, {
   		success: function(user) {
-    		window.location.href = "login.html";
+    		window.location.href = "/view/login.html";
   		},
   		error: function(user, error) {
     		// 失败了
     		alert("Error: " + error.code + " " + error.message);
   		}
 	});
+}
+function regCheck(username,pwd,pwdConfirm,email){
+	
+	if(username&&pwd&&pwdConfirm&&email){
+		var check = document.getElementById("treaty");
+		if(check.checked){
+			removeNote();
+			return;
+		}else{
+			removeNote();
+			addNote(check,"<p class=\"noteinfo\">请选择阅读并同意用户协议！</p>");
+		}
+	}else{
+		removeNote();
+		addNote(document.getElementById("reg"),"<p class=\"noteinfo\">输入信息有误！</p>");
+	}
 }
