@@ -64,64 +64,20 @@
             <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=5)" width="100%" color=#987cb9 SIZE=10>
             <ol class="breadcrumb">
                 <li><a href="#">后台</a></li>
-                <li><a href="#">图书管理</a></li>
-                <li class="active">添加图书</li>
+                <li class="active">后台中心</li>
             </ol>
-            <div style="width: 90%; ">
-                <form class="form-horizontal" id="addBook">
-                    <div class="form-group">
-                        <label for="bookname" class="col-sm-2 control-label">图书名称：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="bookname" placeholder="请输入图书名称" name="bookName" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="author" class="col-sm-2 control-label">图书作者：</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="author" placeholder="请输入图书作者" name="bookAuthor">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="price" class="col-sm-2 control-label">图书价格：</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="price" placeholder="请输入图书价格" name="bookPrice">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">图书分类：</label>
-                        &nbsp&nbsp&nbsp
-                        <label class="radio-inline">
-                            <input type="radio" name="bookSort" id="inlineRadio1" value="计算机"> 计算机
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="bookSort" id="inlineRadio2" value="英语"> 英语
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="bookSort" id="inlineRadio3" value="数学"> 数学
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cover" class="col-sm-2 control-label">封面图片：</label>
-                        <div class="col-sm-10">
-                            <input type="url" class="form-control" id="cover" placeholder="请输入图片地址" name="bookCover">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="desc" class="col-sm-2 control-label">封面图片：</label>&nbsp;&nbsp;&nbsp;
-                        <textarea id="desc" placeholder="请输入图书简介" name="bookPrimary" rows="5" cols="100"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success" id="addProduct">保存图书</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="jumbotron">
+                <h1>优秀的个人书店</h1>
+                <br>
+                <p><span style="color: cadetblue">项目成员：</span><span style="color: darkcyan">陈浩，邓紫薇，张董朝，钟云昶</span></p>
+                <p><a class="btn btn-primary btn-lg" href="http://www.bellorchid.info" role="button">学习更多</a></p>
+            </div>
+            <div style="width: 100%; ">
+                <div id="bookItem">
+                    <table class="table table-striped" id="bookTable">
+                        <tr><td width="30%">图书总数</td><td width="25%">图书种类</td><td>图书价格总数</td><td>用户数</td><td width="15%">活跃用户</td></tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -129,33 +85,7 @@
     <script type="text/javascript" src="https://cn.avoscloud.com/scripts/lib/av-0.5.0.min.js"></script>
     <script type="text/javascript" src="../../js/config.js"></script>
     <script type="text/javascript">
-        $("#addProduct").click(function() {
-            var form = document.getElementById('addBook');
-            var bookName = form.bookName;
-            var bookAuthor = form.bookAuthor;
-            var bookPrice = form.bookPrice;
-            var bookSort = form.bookSort;
-            var bookCover = form.bookCover;
-            var bookDesc = form.bookPrimary;
-            var Products = AV.Object.extend("Products");
-            var product = new Products();
-            product.save({
-                BookName : bookName.value,
-                BookAuthor : bookAuthor.value,
-                ProPrice : parseInt(bookPrice.value),
-                ProTag : bookSort.value,
-                ProCover : bookCover.value,
-                ProDesc : bookDesc.value
-            },{
-                success:function(product) {
-                    window.location.href = "www.baidu.com";
-                },
-                error: function () {
-                    alert("shdw");
-                }
-            });
-        });
-
-
+        var bookItem = document.getElementById("bookTable");
+        bookItem.insertAdjacentHTML("beforeend", '<tr style="color: burlywood"><td width="30%">23本</td><td width="25%">计算机/数学/英语</td><td>879.6元</td><td>7位</td><td width="15%">1位</td></tr>');
     </script>
 </html>
