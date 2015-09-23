@@ -89,3 +89,16 @@ document.getElementById("sidemenu").onclick = function(e){
 document.getElementById("sidebar").onclick = function(e){
 	e.target.classList.remove("active");
 }
+
+/* 提示信息*/
+function addNote(that,text){
+	that.parentElement.insertAdjacentHTML("afterend",text);
+}
+
+function removeNote(){
+
+	var el = document.querySelector(".noteinfo");
+	if(el){
+		el.remove();
+	}
+}

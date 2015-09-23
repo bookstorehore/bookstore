@@ -21,7 +21,8 @@ function logCheck(username,pwd){
 function logIn(username,pwd){
 	AV.User.logIn(username,pwd,{
 		success:function(){
-			window.location.href="/"
+
+			window.history.go(-1);
 		},
 		error:function(){
 			window.location.reload();
