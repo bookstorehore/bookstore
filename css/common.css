@@ -286,7 +286,6 @@ i.formicon{
 /*隐藏显示*/
 
 .hide{
-	display: none;
 	opacity: 0;
 	filter:alpha(opacity=0);
 }

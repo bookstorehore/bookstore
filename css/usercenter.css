@@ -1,0 +1,59 @@
+.managetab{
+	position: fixed;
+	top:100px;
+	left: 60px;
+	text-align: center;
+}
+.managetab li{
+	width: 100px;
+	height: 50px;
+	line-height: 50px;
+	border-bottom:solid 1px; 
+	cursor: pointer;
+}
+.managetab li:hover{
+	color: #fcc828;
+}
+
+.active{
+	color: #fcc828;
+}
+.infoshow{
+	width: 800px;
+	background-color:#fff;
+	min-height: 400px;
+	margin: 150px auto;
+	padding: 20px 60px;
+}
+.infoshow fieldset{
+	position: relative;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.infoshow input{
+	border: none;
+	height:40px;
+	padding: 5px 10px;
+	border-bottom: solid 1px #ccc;
+}
+.infoshow input:focus{
+	border-color: #fcc828;
+}
+.infoshow input[type=submit]{
+	border:solid 1px #fcc828; 
+	background-color: #faa838;
+	cursor: pointer;
+	width: 80px;
+	height: 40px;
+}
+.upfile{
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	cursor: pointer;
+}
+.usericon{
+	height: 100px;
+	width:100px;
+	cursor: pointer;
+}
