@@ -2,9 +2,20 @@
 
 window.onload = function(){
 	dataRequest();
+	loadAddvertise();
 	slide();
 	isLogin();
 }
+
+function loadAddvertise(){
+	var coverQuery = new AV.Query("Act");
+	coverQuery.find({
+		success: function(covers) {
+			loadCovers(covers);
+		}
+	});
+}
+
 
 function dataRequest(){
 	
@@ -19,6 +30,14 @@ function dataRequest(){
 			loadError();
 		}
 	});
+}
+
+function loadCovers(covers) {
+	var len = covers.length;
+	var imgs = document.getElementsByClassName('coverimg');
+	for(var i = 0; i < len; i = i + 1) {
+		imgs[i].src = covers[i].attributes.imageUrl;
+	}
 }
 
 function loadDom(results){
