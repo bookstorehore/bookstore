@@ -1,9 +1,6 @@
-document.getElementById("logform").onsubmit = function(e){
-	e.preventDefault();
-	document.getElementById("login").click();
-}
 
 document.getElementById("login").onclick = function(e){
+	e.preventDefault();
 	var username = document.querySelector(".user").value;
 	var pwd = document.querySelector(".pwd").value;
 	logCheck(username,pwd);

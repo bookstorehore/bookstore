@@ -1,9 +1,6 @@
 
-document.getElementById("regform").onsubmit = function(e){
-	e.preventDefault();
-	document.getElementById("reg").click();
-}
 document.getElementById("reg").onclick = function(e){
+	e.preventDefault();
 	var username = document.querySelector(".user").value;
 	var pwd = document.querySelector(".pwd").value;
 	var pwdConfirm = document.querySelector(".pwdconfirm").value;
