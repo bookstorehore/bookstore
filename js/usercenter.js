@@ -106,7 +106,7 @@ function loadOrderInfo(){
 	order.equalTo("userId",current.id);
 	order.find({
 		success: function(results) {
-			if(results > 0) {
+			if(results.length > 0) {
 				loadOrderDom(results);
 			}else {
 				document.getElementById("show").innerHTML = '<h1 class="noteinfo">没有订单信息！</h1>';
@@ -121,73 +121,89 @@ function loadOrderInfo(){
 function loadOrderDom(results){
 
 	var dom = '';
-	var i =0;
+	var eventloop = 0;
 	var len = results.length;
-	for(; i < len;){
+	for(var i = 0; i < len; i = i + 1){
 		var book = new AV.Query('Products');
 		book.equalTo('objectId', results[i].attributes.bookid);
-		book.find({
-			success: function(orderBook) {
-				dom = dom + '<tr class="tabinfo"><td class="tabtitle"><a href="../view/detail.html?id="'+orderBook[0].id+'><img src="'+orderBook.attributes.ProCover+'"><p class="tabname">'+orderBook[0].attributes.BookName+'</p><p class="tabtext">'+orderBook[0].attributes.BookAuthor+'</p></a></td><td class="tabprice">'+orderBook[0].attributes.BookPrice+'</td><td class="tabcount">'+results[i].attributes.bookNum+'</td><td class="tabsum">'+results[i].attributes.orderPrice+'</td><td class="tabstate">'+results[i].attributes.state+'</td><td class="tabdel"><input type="checkbox" id="'+results[i].id+'" class="check"></td></tr>';
-				i = i + 1;
-			}
-		});
+		(function(i){
+			book.find({
+				success: function(orderBook) {
+					dom = dom + '<tr class="tabinfo"><td class="tabtitle"><a href="../view/detail.html?id="'+orderBook[0].id+'><img src="'+orderBook[0].attributes.ProCover+'"><p class="tabname">'+orderBook[0].attributes.BookName+'</p><p class="tabtext">'+orderBook[0].attributes.BookAuthor+'</p></a></td><td class="tabprice">'+orderBook[0].attributes.BookPrice+'</td><td class="tabcount">'+results[i].attributes.bookNum+'</td><td class="tabsum">'+results[i].attributes.orderPrice+'</td><td class="tabstate">'+results[i].attributes.state+'</td><td class="tabdel"><input type="checkbox" id="'+results[i].id+'" class="check"></td></tr>';
+					eventloop = i + 1;
+					if(eventloop >= len){
+						loadd();
+					}
+				}
+			});
+		})(i);
 	}
 	var dom1 = '<h1>订单信息</h1><table class="ordertable"><thead><tr class="tabhead"><th class="tabtitle">基本信息</th><th class="tabprice">单价</th><th class="tabcount">数量</th><th class="tabsum">合计</th><th class="tabstate">状态</th><th class="tabdel">选择</th></tr></thead><tbody><tr class="tableborder"><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
-				
-	dom = dom1 + dom + '</tbody></table><div class="orderop"><input type="submit" id="orderdelete" value="订单删除" ><input type="submit" id="orderchange" value="订单付款" ><div>';
+	function loadd(){
+		dom = dom1 + dom + '</tbody></table><div class="orderop"><input type="submit" id="orderdelete" value="订单删除" ><input type="submit" id="orderchange" value="订单付款" ><div>';
 
-	document.getElementById("show").innerHTML = dom;
+		document.getElementById("show").innerHTML = dom;
 
-	InitOrderOperate();
+		InitOrderOperate();
+	}	
 }
 
 function InitOrderOperate(){
 	document.getElementById("orderdelete").onclick = function(e) {
 		e.preventDefault();
 		var checks = document.querySelectorAll(".check");
-		var i = 0;
-		for(; i < checks.length;){
+		var loop = 0;
+		var len = checks.length;
+		for(var i= 0; i < len;i++){
 			if(checks[i].checked) {
 				var orderId = checks[i].id;
-				var order = AV.Query("Order");
-				order.get(orderId, {
-					success: function(post) {
-						post.destroy();
-						i = i + 1;
-					}
-				});
+				var order = new AV.Query("Order");
+				(function(i) {
+					order.get(orderId, {
+						success: function(post) {
+							post.destroy();
+							loop = i + 1
+							if(loop >= len){
+								document.getElementById("orderinfo").click();
+							}
+						}
+					});
+				})(i);
 			}else{
 				return;
 			}
 		}
-		document.getElementById("orderinfo").click();
 
 	}
 
 	document.getElementById("orderchange").onclick = function(e) {
 		e.preventDefault();
 		var checks = document.querySelectorAll(".check");
-		var i = 0;
-		for(; i < checks.length;) {
+		var loop = 0;
+		var len = checks.length;
+		for(var i =0; i < len;i ++) {
 			if(checks[i].checked) {
 				var orderId = checks[i].id;
-				var order = AV.Query("Order");
-				order.get(orderId, {
-					success: function(post) {
-						post.set("state","已支付");
-						post.save();
-						i = i + 1;
-					},
-					error: function(err){
-						alert('支付失败'+ err.message);
-					}
-				});
+				var order = new AV.Query("Order");
+				(function(i){
+					order.get(orderId, {
+						success: function(post) {
+							post.set("state","已支付");
+							post.save();
+							loop = i + 1;
+							if(loop >= len){
+								document.getElementById("orderinfo").click();
+							}
+						},
+						error: function(err){
+							alert('支付失败'+ err.message);
+						}
+					});
+				})(i);
 			}else{
 				return;
 			}
 		}
-		document.getElementById("orderinfo").click();
 
 	}
 
@@ -198,10 +214,12 @@ function loadAddrInfo(){
 	addr.equalTo("userId",current.id);
 	addr.find({
 		success: function(results){
-			if(results > 0) {
+			if(results.length > 0) {
 				loadAddrDom(results);
 			}else {
-				document.getElementById("show").innerHTML = '<h1 class="noteinfo">没有地址信息！</h1>';
+				var dom = '<h1 class="noteinfo">没有地址信息！</h1><div id="addrIn"><input type="text" id="city" placeholder="请填写城市" class="addr"><input type="text" id="village" placeholder="详细地址" class="addr"><input type="text" id="recevie" placeholder="填写收件人" class="addr"><input type="text" id="number" placeholder="填写电话号码" class="addr"><input type="submit" id="addrenroll" value="确认添加"></div><div class="orderop"><input type="submit" id="addrdelete" value="删除地址" ><input type="submit" id="addradd" value="添加地址" ><div>'
+				document.getElementById("show").innerHTML = dom;
+				addrOperateInit();
 			}
 		},
 		error: function(){
@@ -214,13 +232,13 @@ function loadAddrDom(results){
 	var dom = '';
 	var len = results.length;
 	for(var i = 0;i < len; i = i + 1) {
-		dom = dom + '<li class="panel addresspanel" id="'+results[i].id+'"><div class="addresstitle">'+results[i].attributes.city+'('+results[i].attributes.recevier+')</div><div class="divider"></div><div class="addressdetail">'+results[i].attributes.village+'&nbps&nbps'+results[i].attributes.phone+'</div></li>';
+		dom = dom + '<li class="panel addresspanel" id="'+results[i].id+'"><div class="addresstitle">'+results[i].attributes.city+'('+results[i].attributes.recevier+')</div><div class="divider"></div><div class="addressdetail">'+results[i].attributes.village+'（电话：'+results[i].attributes.phone+'）</div></li>';
 
 	}
-	var dom = '<h1>地址信息</h1><ul class="addresslist">' + dom + '<div id="addrIn"><input type="text" id="city" placeholder="请填写城市" class="addr"><input type="text" id="village" placeholder="详细地址" class="addr"><input type="text" id="recevie" placeholder="填写收件人" class="addr"><input type="text" id="number" placeholder="填写电话号码" class="addr"><input type="submit" id="addrenroll"></div><div class="orderop"><input type="submit" id="orderdelete" value="订单删除" ><input type="submit" id="orderchange" value="订单付款" ><div>';
+	var dom = '<h1>地址信息</h1><ul class="addresslist">' + dom + '<div id="addrIn"><input type="text" id="city" placeholder="请填写城市" class="addr"><input type="text" id="village" placeholder="详细地址" class="addr"><input type="text" id="recevie" placeholder="填写收件人" class="addr"><input type="text" id="number" placeholder="填写电话号码" class="addr"><input type="submit" id="addrenroll" value="确认添加"></div><div class="orderop"><input type="submit" id="addrdelete" value="删除地址" ><input type="submit" id="addradd" value="添加地址" ><div>';
 	document.getElementById("show").innerHTML = dom;
 
-	addrOperateInit()
+	addrOperateInit();
 }
 
 function addrOperateInit(){
@@ -237,33 +255,37 @@ function addrOperateInit(){
 	}
 	document.getElementById("addrdelete").onclick = function(e) {
 		e.preventDefault();
-		var selects = document.getElementsByClassName(".selected");
+		var selects = document.getElementsByClassName("selected");
 		if(selects.length === 0){
 			return;
 		}
-		var i = 0;
-		for(;i<selects.length;){
+		var loop = 0;
+		var len = selects.length;
+		for(var i = 0; i < len; i = i + 1) {
 			var addrId = selects[i].id;
 			var addr = new AV.Query("Addr");
-			addr.equalTo("objectId",addrId);
-			addr.find({
-				success: function(info) {
-					info.destroy();
-					i = i + 1;
-				},
-			});
+			(function(i){
+				addr.get(addrId,{
+					success: function(info) {
+						info.destroy();
+						loop = i + 1 
+						if(loop >= len){
+							document.getElementById("addrinfo").click();
+						}
+					}
+				});
+			})(i);
 		}
-		document.getElementById("addrinfo").click();
 	}
 
 	document.getElementById("addradd").onclick= function() {
 		document.getElementById("addrIn").style.display = "block";
-		document.body.onclick = function(e) {
-			e.stopProgagation();
-			document.getElementById("addrIn").style.display = "none";
-		}
+		// document.body.onclick = function(e) {
+		// 	e.stopPropagation();
+		// 	document.getElementById("addrIn").style.display = "none";
+		// }
 	}
-	document.getElementById(".addrenroll").onclick = function() {
+	document.getElementById("addrenroll").onclick = function() {
 		var city = document.getElementById("city").value;
 		var village = document.getElementById("village").value;
 		var recevie = document.getElementById("recevie").value;
@@ -275,6 +297,7 @@ function addrOperateInit(){
 			addr.set("village",village);
 			addr.set("recevier",recevie);
 			addr.set("phone",phonenum);
+			addr.set("userId",current.id);
 			addr.save(null,{
 				success: function() {
 					document.getElementById("addrinfo").click();
