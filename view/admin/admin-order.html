@@ -1,0 +1,163 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="../../css/admin/admin-manage.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://cn.avoscloud.com/scripts/lib/av-0.5.0.min.js"></script>
+    <script type="text/javascript" src="../../js/config.js"></script>
+    <script type="text/javascript" src="../../js/common/underscore.js"></script>
+    <script type="text/javascript" src="../../js/admin/admin-modal.js"></script>
+    <title>后台管理系统</title>
+</head>
+<body>
+
+<nav class="navbar  navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="http://www.easyicon.net/api/resizeApi.php?id=1065270&size=32">
+            </a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="./admin_index.html">网上书店管理后台</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-left">
+
+                <li><a href="../usercenter.html">个人中心</a></li>
+                <li class="active"><a href="./admin-order.html">订单管理</a></li>
+                <li><a href="./admin-block.html">前台编辑</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">图书管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="./admin-addbook.html" class="list-group-item">添加书籍</a></li>
+                        <li><a href="./admin-booklist.html" class="list-group-item">管理书籍</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a style="font-size: inherit;color: #fcc828" href="../../index.html">回到前台</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size: inherit;" href="#"><span class="caret"></span>Bellorchid</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://www.bellorchid.info" class="list-group-item">打开我的个人网站</a></li>
+                        <li><a href="../../index.html" onclick="logout()" class="list-group-item">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h3>管理中心</h3>
+        <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=5)" width="100%" color=#987cb9 SIZE=10>
+        <ol class="breadcrumb">
+            <li><a href="./admin_index.html">后台</a></li>
+            <li class="active">订单列表</li>
+        </ol>
+        <div id="bookItem">
+            <table class="table table-striped" id="bookTable">
+                <tr><td width="30%">商品名称</td><td width="25%">商品价格</td><td>订单地址</td><td>订单状态</td><td width="15%">订单用户</td></tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+</body>
+
+<script>
+    findOrder();
+
+    function findOrder() {
+        var query = new AV.Query('Order');
+        query.find({
+            success: function (results) {
+                var loopOfBooks = 0;
+                var loopOfUsers = 0;
+                var orders = [];
+                
+                var handleResultsClosure = function (i) {
+                    orders[i].orderPrice = results[i].get('orderPrice');
+                    orders[i].orderAddr = results[i].get('orderAddr');
+                    orders[i].orderState = results[i].get('state');
+                    orders[i].bookItem = document.getElementById("bookTable");
+
+                    return function () {
+                        if (loopOfBooks === results.length && loopOfUsers === results.length) {
+//                            console.log(orders);
+                            orders.forEach(function (order) {
+                                order.bookItem.insertAdjacentHTML("beforeend", "<tr><td>" + order.bookName + "</td><td>" +  order.orderPrice + "</td><td>" +  order.orderAddr + "</td><td>" +  order.orderState + "</td><td>"+  order.userName+"</td></tr>");
+                            });
+                        }
+                    };
+                };
+
+                for (var i = 0; i < results.length; i++) {
+
+                    if (!orders[i]) {
+                        orders[i] = {};
+                    }
+
+                    var productsQuery = new AV.Query('Products');
+                    var handleResults = handleResultsClosure(i);
+
+                    productsQuery.get(results[i].get('bookid'), {
+                        success: function (pro) {
+                            var bookName = pro.get('BookName');
+
+                            orders[loopOfBooks].bookName = bookName;
+                            loopOfBooks++;
+
+                            handleResults();
+                        },
+                        error: function (err) {
+                            console.error(err);
+                        }
+                    });
+
+
+                    var User = new AV.Query(AV.User);
+                    User.equalTo('objectId', results[i].get('userId'));
+                    User.find({
+                        success: function (result) {
+                            var userName = result[0].get('username');
+
+                            orders[loopOfUsers].userName = userName;
+                            loopOfUsers++;
+
+                            handleResults();
+                        },
+                        error: function (err) {
+                            console.error(err);
+                        }
+                    });
+                }
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+
+    }
+
+
+
+
+
+</script>
+</html>
+

@@ -16,13 +16,26 @@ function logCheck(username,pwd){
 	}
 }
 function logIn(username,pwd){
-	AV.User.logIn(username,pwd,{
-		success:function(){
+	if(username == "admin"){
+		AV.User.logIn(username,pwd,{
+			success:function(){
 
-			window.history.go(-1);
-		},
-		error:function(){
-			window.location.reload();
-		}
-	});
+				window.location.href = "./admin/admin_index.html";
+			},
+			error:function(){
+				window.location.reload();
+			}
+		});
+	} else {
+		AV.User.logIn(username,pwd,{
+			success:function(){
+
+				window.history.go(-1);
+			},
+			error:function(){
+				window.location.reload();
+			}
+		});
+	}
+
 }

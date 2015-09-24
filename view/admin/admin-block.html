@@ -1,0 +1,189 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="../../css/admin/admin-manage.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://cn.avoscloud.com/scripts/lib/av-0.5.0.min.js"></script>
+    <script type="text/javascript" src="../../js/config.js"></script>
+    <script type="text/javascript" src="../../js/common/underscore.js"></script>
+    <script type="text/javascript" src="../../js/admin/admin-modal.js"></script>
+    <title>后台管理系统</title>
+</head>
+<body>
+
+<nav class="navbar  navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="http://www.easyicon.net/api/resizeApi.php?id=1065270&size=32">
+            </a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="./admin_index.html">网上书店管理后台</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-left">
+
+                <li><a href="../usercenter.html">个人中心</a></li>
+                <li><a href="./admin-order.html">订单查看</a></li>
+                <li class="active"><a href="./admin-block.html">前台编辑</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">图书管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="./admin-addbook.html" class="list-group-item">添加书籍</a></li>
+                        <li><a href="./admin-booklist.html" class="list-group-item">管理书籍</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a style="font-size: inherit;color: #fcc828" href="../../index.html">回到前台</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size: inherit;" href="#"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="list-group-item">打开我的个人网站</a></li>
+                        <li><a href="../../index.html" onclick="logout()" class="list-group-item">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h3>管理中心</h3>
+        <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=5)" width="100%" color=#987cb9 SIZE=10>
+        <ol class="breadcrumb">
+            <li><a href="./admin_index.html">后台</a></li>
+            <li><a href="./admin-block.html">网站编辑</a></li>
+            <li class="active">轮播图编辑</li>
+        </ol>
+
+        <div style="width: 90%; ">
+            <form class="form-horizontal" id="input1">
+                <div class="form-group">
+                    <label for="cover1" class="col-sm-2 control-label">第一张轮播图：</label>
+                    <div class="col-sm-10">
+                        <img style="width: 50%;height: 50% " id="1" src="http://7xkfa4.com1.z0.glb.clouddn.com/icon.jpg"  alt=""/>
+                        </br> </br>
+                        <input type="url" class="form-control" id="cover1" placeholder="请输入新的图片地址" name="picture" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success" id="save1">保存</button>
+                    </div>
+                </div>
+            </form>
+            <form class="form-horizontal" id="input2">
+                <div class="form-group">
+                    <label for="cover2" class="col-sm-2 control-label">第二张轮播图：</label>
+                    <div class="col-sm-10" >
+                        <img style="width: 50%;height: 50% " id="2" src="http://7xkfa4.com1.z0.glb.clouddn.com/icon.jpg"  alt=""/>
+                        </br> </br>
+                        <input type="url" class="form-control" id="cover2" placeholder="请输入新的图片地址" name="picture">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success" id="save2">保存</button>
+                    </div>
+                </div>
+            </form>
+            <form class="form-horizontal" id="input3">
+                <div class="form-group">
+                    <label for="cover3" class="col-sm-2 control-label">第三张轮播图：</label>
+                    <div class="col-sm-10">
+                        <img style="width: 50%;height: 50% " id="3" src="http://7xkfa4.com1.z0.glb.clouddn.com/icon.jpg"  alt=""/>
+                        </br> </br>
+                        <input type="url" class="form-control" id="cover3" placeholder="请输入新的图片地址" name="picture">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success" id="save3">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    var PIC1 = AV.Object.extend("Act");
+    var pic1 = new AV.Query(PIC1);
+    pic1.find({
+        success: function (act) {
+            for (var i = 0;i< act.length;i++){
+                var id = act[i].get('imageId');
+                var url = act[i].get('imageUrl');
+                document.getElementById(id).setAttribute("src",url);
+                document.getElementById("cover"+id).setAttribute("value",url);
+            }
+        },
+        error: function () {
+
+        }
+    });
+
+    document.getElementById("save1").onclick = function(){
+        event.preventDefault();
+        update1();
+    };
+    function update1(){
+
+        var query =  AV.Object.createWithoutData("Act","560180cc60b29460f7e98a33");
+        var form = document.getElementById('cover1');
+        var pic = form.value;
+        query.set("imageUrl",pic);
+        query.save();
+        alert("保存成功！");
+        window.location.reload();
+    }
+    document.getElementById("save2").onclick = function(){
+        event.preventDefault();
+        update2();
+
+    };
+    function update2(){
+
+        var query =  AV.Object.createWithoutData("Act","560180f560b2de2d0c52b2a5");
+        var form = document.getElementById('cover2');
+        var pic = form.value;
+        query.set("imageUrl",pic);
+        query.save();
+        alert("保存成功！");
+        window.location.reload();
+    }
+
+    document.getElementById("save3").onclick = function(){
+        event.preventDefault();
+        update3();
+    };
+    function update3(){
+
+        var query =  AV.Object.createWithoutData("Act","560180d460b2521f37fdad75");
+        var form = document.getElementById('cover3');
+        var pic = form.value;
+        query.set("imageUrl",pic);
+        query.save();
+        alert("保存成功！");
+        window.location.reload();
+    }
+
+</script>
+</html>
+
